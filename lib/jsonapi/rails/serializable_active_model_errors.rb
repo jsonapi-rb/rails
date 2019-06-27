@@ -17,9 +17,13 @@ module JSONAPI
 
     # @private
     class SerializableActiveModelErrors
+      BASE_ERRORS_MAPPING = { base: '/data' }.freeze
+
       def initialize(exposures)
         @errors = exposures[:object]
-        @reverse_mapping = exposures[:_jsonapi_pointers] || {}
+        @reverse_mapping = BASE_ERRORS_MAPPING.merge(
+          exposures[:_jsonapi_pointers] || {}
+        )
 
         freeze
       end
