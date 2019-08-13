@@ -11,7 +11,7 @@ module JSONAPI
       end
 
       source do
-        pointer @pointer unless @pointer.nil?
+        pointer(@pointer || '/data/attributes')
       end
     end
 
