@@ -20,7 +20,7 @@ module JSONAPI
 
       def valid_content_type?(content_type)
         Rack::MediaType.type(content_type) != JSONAPI_MEDIA_TYPE ||
-          Rack::MediaType.params(content_type) == {}
+          Rack::MediaType.params(content_type).empty?
       end
 
       def valid_accept?(accept)
@@ -32,7 +32,7 @@ module JSONAPI
                 .select { |m| Rack::MediaType.type(m) == JSONAPI_MEDIA_TYPE }
 
         jsonapi_media_types.empty? ||
-          jsonapi_media_types.any? { |m| Rack::MediaType.params(m) == {} }
+          jsonapi_media_types.any? { |m| Rack::MediaType.params(m).empty? }
       end
     end
   end
