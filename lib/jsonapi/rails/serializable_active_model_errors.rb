@@ -2,6 +2,10 @@ module JSONAPI
   module Rails
     # @private
     class SerializableActiveModelError < Serializable::Error
+      code do
+        @code
+      end
+
       title do
         "Invalid #{@field}" unless @field.nil?
       end
@@ -26,10 +30,13 @@ module JSONAPI
 
       def as_jsonapi
         @errors.keys.flat_map do |key|
-          @errors.full_messages_for(key).map do |message|
-            SerializableActiveModelError.new(field: key, message: message,
-                                             pointer: @reverse_mapping[key])
-              .as_jsonapi
+          @errors.full_messages_for(key).map.with_index do |message, i|
+            SerializableActiveModelError.new(
+              field: key,
+              message: message,
+              pointer: @reverse_mapping[key],
+              code: @errors.details[key][i][:error]
+            ).as_jsonapi
           end
         end
       end

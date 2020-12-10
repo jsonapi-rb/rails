@@ -17,11 +17,13 @@ describe ActionController::Base, '#render', type: :controller do
     {
       'errors' => [
         {
+          'code' => 'blank',
           'detail' => 'Name can\'t be blank',
           'title' => 'Invalid name',
           'source' => { 'pointer' => '/data/attributes/name' }
         },
         {
+          'code' => 'invalid',
           'detail' => 'Email must be a valid email',
           'title' => 'Invalid email',
           'source' => { 'pointer' => '/data/attributes/email' }
@@ -64,11 +66,13 @@ describe ActionController::Base, '#render', type: :controller do
       def create
         errors = [
           {
+            'code' => 'blank',
             detail: 'Name can\'t be blank',
             title: 'Invalid name',
             source: { pointer: '/data/attributes/name' }
           },
           {
+            'code' => 'invalid',
             detail: 'Email must be a valid email',
             title: 'Invalid email',
             source: { pointer: '/data/attributes/email' }
